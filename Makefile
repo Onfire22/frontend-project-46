@@ -6,3 +6,6 @@ run:
 
 lint:
 	npx eslint .
+
+test:
+	npx jest
