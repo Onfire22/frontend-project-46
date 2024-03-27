@@ -1,5 +1,5 @@
 import printDiffs from './flatDiff.js';
-import parseData from './dataParse.js';
+import parseData from './parsers.js';
 
 const genDiff = (path1, path2) => {
   const file1 = parseData(path1);
