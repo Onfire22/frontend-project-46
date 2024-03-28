@@ -12,7 +12,7 @@ const parseData = (file) => {
     case '.yml':
       return yaml.load(data);
     default:
-      throw new Error('unknown file extantion');
+      return 'unknown file extantion';
   }
 };
 

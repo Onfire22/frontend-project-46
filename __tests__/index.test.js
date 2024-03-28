@@ -9,11 +9,11 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const getExpectedResult = (filename) => fs.readFileSync(getFixturePath(filename), { encoding: 'utf8', flag: 'r' });
 
 test('genDiff test', () => {
-  const result = getExpectedResult('result.txt');
-  const fixtureJSON1 = getFixturePath('file1.json');
-  const fixtureJSON2 = getFixturePath('file2.json');
-  const fixtureYAML1 = getFixturePath('file1.yaml');
-  const fixtureYAML2 = getFixturePath('file2.yaml');
-  expect(genDiff(fixtureJSON1, fixtureJSON2)).toEqual(result);
-  expect(genDiff(fixtureYAML1, fixtureYAML2)).toEqual(result);
+  const flatResult = getExpectedResult('flatResult.txt');
+  const fixtureJSON1 = getFixturePath('flat1.json');
+  const fixtureJSON2 = getFixturePath('flat2.json');
+  const fixtureYAML1 = getFixturePath('flat1.yaml');
+  const fixtureYAML2 = getFixturePath('flat2.yaml');
+  expect(genDiff(fixtureJSON1, fixtureJSON2)).toEqual(flatResult);
+  expect(genDiff(fixtureYAML1, fixtureYAML2)).toEqual(flatResult);
 });

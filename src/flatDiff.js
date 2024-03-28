@@ -12,23 +12,22 @@ const getUniqKeys = (file1, file2) => {
   return _.uniq(keys);
 };
 
-const buildDiffTree = (file1, file2) => {
+export const buildDiffTree = (file1, file2) => {
   const keys = getUniqKeys(file1, file2);
-  const tree = keys.map((item) => {
-    const diffs = {};
-    diffs.key = item;
-    diffs.value = file1[item];
-    if (Object.hasOwn(file1, item) && !file2[item]) {
-      diffs.status = 'deleted';
-    } else if (!file1[item] && Object.hasOwn(file2, item)) {
-      diffs.value = file2[item];
-      diffs.status = 'added';
-    } else if (file2[item] && file1[item] !== file2[item]) {
-      diffs.status = 'changed';
-    } else {
-      diffs.status = 'unchanged';
+  const tree = keys.map((key) => {
+    if (_.isPlainObject(file1[key] && _.isPlainObject(file2[key]))) {
+      return { key, children: getUniqKeys(file1[key], file2[key]), status: 'complex' };
     }
-    return diffs;
+    if (_.has(file1, key) && !_.has(file2, key)) {
+      return { key, value: file1[key], status: 'deleted' };
+    }
+    if (!_.has(file1, key) && _.has(file2, key)) {
+      return { key, value: file2[key], status: 'added' };
+    }
+    if (!_.isEqual(file1[key], file2[key])) {
+      return { key, value: file1[key], status: 'changed' };
+    }
+    return { key, value: file1[key], status: 'unchanged' };
   });
   return tree;
 };
