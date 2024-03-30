@@ -7,5 +7,5 @@ const genDiff = (path1, path2) => {
   const diffs = stylish(file1, file2);
   return diffs;
 };
-console.log(genDiff('__fixtures__/complex1.json', '__fixtures__/complex2.json'));
+console.log(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json'));
 export default genDiff;
