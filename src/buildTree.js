@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import { getValue, getStatus, getKey } from './utils.js';
 
 const getSortedKeys = (file) => {
   const keys = Object.keys(file);
@@ -32,25 +31,4 @@ const buildDiffTree = (file1, file2) => {
   return tree;
 };
 
-const printDiffs = (file1, file2) => {
-  const tree = buildDiffTree(file1, file2);
-  const lines = tree.map((item) => {
-    const status = getStatus(item);
-    switch (status) {
-      case 'deleted':
-        return ` - ${getKey(item)}: ${getValue(item)}`;
-      case 'added':
-        return ` + ${getKey(item)}: ${getValue(item)}`;
-      case 'unchanged':
-        return `   ${getKey(item)}: ${getValue(item)}`;
-      case 'changed':
-        return ` - ${getKey(item)}: ${getValue(item)}\n + ${getKey(item)}: ${file2[getKey(item)]}`;
-      default:
-        return 'unknown data';
-    }
-  });
-  const result = ['{', ...lines, '}'];
-  return result.join('\n');
-};
-
-export default printDiffs;
+export default buildDiffTree;
