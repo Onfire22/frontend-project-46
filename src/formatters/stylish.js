@@ -1,11 +1,11 @@
 import _ from 'lodash';
 import {
-  getValue,
+  getValue1,
+  getValue2,
   getStatus,
   getKey,
   getChildren,
-} from './utils.js';
-import buildDiffTree from './buildTree.js';
+} from '../utils.js';
 
 const makeSpaces = (depth, replacer = ' ', spacesCount = 4) => replacer.repeat(depth * spacesCount - 2);
 
@@ -18,8 +18,7 @@ const convertToString = (value, depth) => {
   return `{\n${result.join('\n')}\n  ${makeSpaces(depth)}}`;
 };
 
-const stylish = (file1, file2) => {
-  const tree = buildDiffTree(file1, file2);
+const stylish = (tree) => {
   const iter = (node, depth = 1) => {
     const lines = node.map((item) => {
       const status = getStatus(item);
@@ -28,15 +27,15 @@ const stylish = (file1, file2) => {
         case 'complex':
           return `${space}  ${getKey(item)}: {\n${iter(getChildren(item), depth + 1)}\n${space}  }`;
         case 'deleted':
-          return `${space}- ${getKey(item)}: ${convertToString(getValue(item), depth)}`;
+          return `${space}- ${getKey(item)}: ${convertToString(getValue1(item), depth)}`;
         case 'added':
-          return `${space}+ ${getKey(item)}: ${convertToString(getValue(item), depth)}`;
+          return `${space}+ ${getKey(item)}: ${convertToString(getValue1(item), depth)}`;
         case 'changed':
-          return `${space}- ${getKey(item)}: ${convertToString(getValue(item), depth)}\n${space}+ ${getKey(item)}: ${convertToString(item.value2, depth)}`;
+          return `${space}- ${getKey(item)}: ${convertToString(getValue1(item), depth)}\n${space}+ ${getKey(item)}: ${convertToString(getValue2(item), depth)}`;
         case 'unchanged':
-          return `${space}  ${getKey(item)}: ${convertToString(getValue(item), depth)}`;
+          return `${space}  ${getKey(item)}: ${convertToString(getValue1(item), depth)}`;
         default:
-          return 'unknown';
+          throw new Error(`Unknown status ${status}`);
       }
     });
     return lines.join('\n');
@@ -45,5 +44,3 @@ const stylish = (file1, file2) => {
 };
 
 export default stylish;
-
-// to do: stylish(file file) --> stylish(tree)

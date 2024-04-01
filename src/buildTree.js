@@ -18,20 +18,20 @@ const buildDiffTree = (file1, file2) => {
       return { key, children: buildDiffTree(file1[key], file2[key]), status: 'complex' };
     }
     if (_.has(file1, key) && !_.has(file2, key)) {
-      return { key, value: file1[key], status: 'deleted' };
+      return { key, value1: file1[key], status: 'deleted' };
     }
     if (!_.has(file1, key) && _.has(file2, key)) {
-      return { key, value: file2[key], status: 'added' };
+      return { key, value1: file2[key], status: 'added' };
     }
     if (!_.isEqual(file1[key], file2[key])) {
       return {
         key,
-        value: file1[key],
+        value1: file1[key],
         value2: file2[key],
         status: 'changed',
       };
     }
-    return { key, value: file1[key], status: 'unchanged' };
+    return { key, value1: file1[key], status: 'unchanged' };
   });
   return tree;
 };

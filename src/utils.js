@@ -8,13 +8,15 @@ const getExtName = (file) => path.extname(file);
 
 const getStatus = (obj) => obj.status;
 const getKey = (obj) => obj.key;
-const getValue = (obj) => obj.value;
+const getValue1 = (obj) => obj.value1;
+const getValue2 = (obj) => obj.value2;
 const getChildren = (obj) => obj.children;
 
 export {
   getStatus,
   getKey,
-  getValue,
+  getValue1,
+  getValue2,
   getData,
   getExtName,
   getChildren,

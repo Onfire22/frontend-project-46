@@ -1,13 +1,15 @@
 import {
   getKey,
   getStatus,
-  getValue,
+  getValue1,
   getChildren,
+  getValue2,
 } from '../src/utils.js';
 
 const obj = {
   key: 'one',
-  value: 'two',
+  value1: 'one',
+  value2: 'two',
   status: true,
   children: [
     'one, two',
@@ -16,7 +18,8 @@ const obj = {
 
 test('utilTest', () => {
   expect(getKey(obj)).toEqual('one');
-  expect(getValue(obj)).toEqual('two');
+  expect(getValue1(obj)).toEqual('one');
+  expect(getValue2(obj)).toEqual('two');
   expect(getStatus(obj)).toEqual(true);
   expect(getChildren(obj)).toEqual(['one, two']);
 });
