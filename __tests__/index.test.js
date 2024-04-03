@@ -25,7 +25,13 @@ test('gendiff plain test', () => {
   expect(genDiff(fixtureYAML1, fixtureYAML2, 'plain')).toEqual(plainResult);
 });
 
-test('gendiff unknown formatter', () => {
+test('gendiff json test', () => {
+  const jsonResult = getExpectedResult('jsonResult.txt');
+  expect(genDiff(fixtureJSON1, fixtureJSON2, 'json')).toEqual(jsonResult);
+  expect(genDiff(fixtureYAML1, fixtureYAML2, 'json')).toEqual(jsonResult);
+});
+
+test('gendiff unknown formatter error', () => {
   expect(() => {
     genDiff(fixtureJSON1, fixtureJSON2, 'line');
   }).toThrow('Unknown format line. Supported formats: stylish, plain, json');
