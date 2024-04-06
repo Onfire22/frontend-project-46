@@ -5,35 +5,35 @@
       {
         "key": "follow",
         "value1": false,
-        "status": "added"
+        "type": "added"
       },
       {
         "key": "setting1",
         "value1": "Value 1",
-        "status": "unchanged"
+        "type": "unchanged"
       },
       {
         "key": "setting2",
         "value1": 200,
-        "status": "deleted"
+        "type": "deleted"
       },
       {
         "key": "setting3",
         "value1": true,
         "value2": null,
-        "status": "changed"
+        "type": "changed"
       },
       {
         "key": "setting4",
         "value1": "blah blah",
-        "status": "added"
+        "type": "added"
       },
       {
         "key": "setting5",
         "value1": {
           "key5": "value5"
         },
-        "status": "added"
+        "type": "added"
       },
       {
         "key": "setting6",
@@ -45,26 +45,26 @@
                 "key": "wow",
                 "value1": "",
                 "value2": "so much",
-                "status": "changed"
+                "type": "changed"
               }
             ],
-            "status": "complex"
+            "type": "complex"
           },
           {
             "key": "key",
             "value1": "value",
-            "status": "unchanged"
+            "type": "unchanged"
           },
           {
             "key": "ops",
             "value1": "vops",
-            "status": "added"
+            "type": "added"
           }
         ],
-        "status": "complex"
+        "type": "complex"
       }
     ],
-    "status": "complex"
+    "type": "complex"
   },
   {
     "key": "group1",
@@ -73,12 +73,12 @@
         "key": "baz",
         "value1": "bas",
         "value2": "bars",
-        "status": "changed"
+        "type": "changed"
       },
       {
         "key": "foo",
         "value1": "bar",
-        "status": "unchanged"
+        "type": "unchanged"
       },
       {
         "key": "nest",
@@ -86,10 +86,10 @@
           "key": "value"
         },
         "value2": "str",
-        "status": "changed"
+        "type": "changed"
       }
     ],
-    "status": "complex"
+    "type": "complex"
   },
   {
     "key": "group2",
@@ -99,7 +99,7 @@
         "id": 45
       }
     },
-    "status": "deleted"
+    "type": "deleted"
   },
   {
     "key": "group3",
@@ -111,6 +111,6 @@
       },
       "fee": 100500
     },
-    "status": "added"
+    "type": "added"
   }
 ]

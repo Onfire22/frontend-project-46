@@ -1,11 +1,4 @@
 import _ from 'lodash';
-import {
-  getValue1,
-  getValue2,
-  getStatus,
-  getKey,
-  getChildren,
-} from '../utils.js';
 
 const convertToString = (value) => {
   if (_.isObject(value)) {
@@ -17,21 +10,24 @@ const convertToString = (value) => {
 
 const plain = (tree) => {
   const iter = (node, route) => {
-    const line = node.filter((item) => item.status !== 'unchanged')
+    const line = node.filter((item) => item.type !== 'unchanged')
       .map((item) => {
-        const status = getStatus(item);
-        const path = `${route}${getKey(item)}`;
-        switch (status) {
+        const {
+          key, children, value1, value2, type,
+        } = item;
+        const path = `${route}${key}`;
+        console.log(path);
+        switch (type) {
           case 'complex':
-            return iter(getChildren(item), `${path}.`);
+            return iter(children, `${path}.`);
           case 'deleted':
             return `Property '${path}' was removed`;
           case 'added':
-            return `Property '${path}' was added with value: ${convertToString(getValue1(item))}`;
+            return `Property '${path}' was added with value: ${convertToString(value1)}`;
           case 'changed':
-            return `Property '${path}' was updated. From ${convertToString(getValue1(item))} to ${convertToString(getValue2(item))}`;
+            return `Property '${path}' was updated. From ${convertToString(value1)} to ${convertToString(value2)}`;
           default:
-            throw new Error(`Unknown status ${status}`);
+            throw new Error(`Unknown type ${type}`);
         }
       });
     return line.join('\n');

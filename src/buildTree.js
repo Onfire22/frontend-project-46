@@ -1,37 +1,26 @@
 import _ from 'lodash';
 
-const getUniqKeys = (file1, file2) => {
-  const keys = [...Object.keys(file1), ...Object.keys(file2)];
-  return _.uniq(keys);
-};
-
-const getSortedKeys = (file1, file2) => {
-  const keys = getUniqKeys(file1, file2);
-  const sorted = _.sortBy(keys);
-  return sorted;
-};
-
-const buildDiffTree = (file1, file2) => {
-  const keys = getSortedKeys(file1, file2);
+const buildDiffTree = (content1, content2) => {
+  const keys = _.sortBy(_.uniq([...Object.keys(content1), ...Object.keys(content2)]));
   const tree = keys.map((key) => {
-    if (_.isPlainObject(file1[key]) && _.isPlainObject(file2[key])) {
-      return { key, children: buildDiffTree(file1[key], file2[key]), status: 'complex' };
+    if (_.isPlainObject(content1[key]) && _.isPlainObject(content2[key])) {
+      return { key, children: buildDiffTree(content1[key], content2[key]), type: 'complex' };
     }
-    if (!_.has(file2, key)) {
-      return { key, value1: file1[key], status: 'deleted' };
+    if (!_.has(content2, key)) {
+      return { key, value1: content1[key], type: 'deleted' };
     }
-    if (!_.has(file1, key) && _.has(file2, key)) {
-      return { key, value1: file2[key], status: 'added' };
+    if (!_.has(content1, key) && _.has(content2, key)) {
+      return { key, value1: content2[key], type: 'added' };
     }
-    if (!_.isEqual(file1[key], file2[key])) {
+    if (!_.isEqual(content1[key], content2[key])) {
       return {
         key,
-        value1: file1[key],
-        value2: file2[key],
-        status: 'changed',
+        value1: content1[key],
+        value2: content2[key],
+        type: 'changed',
       };
     }
-    return { key, value1: file1[key], status: 'unchanged' };
+    return { key, value1: content1[key], type: 'unchanged' };
   });
   return tree;
 };

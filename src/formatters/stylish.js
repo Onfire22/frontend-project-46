@@ -1,11 +1,4 @@
 import _ from 'lodash';
-import {
-  getValue1,
-  getValue2,
-  getStatus,
-  getKey,
-  getChildren,
-} from '../utils.js';
 
 const makeSpaces = (depth, replacer = ' ', spacesCount = 4) => replacer.repeat(depth * spacesCount - 2);
 
@@ -21,21 +14,23 @@ const convertToString = (value, depth) => {
 const stylish = (tree) => {
   const iter = (node, depth = 1) => {
     const lines = node.map((item) => {
-      const status = getStatus(item);
+      const {
+        key, children, value1, value2, type,
+      } = item;
       const space = makeSpaces(depth);
-      switch (status) {
+      switch (type) {
         case 'complex':
-          return `${space}  ${getKey(item)}: {\n${iter(getChildren(item), depth + 1)}\n${space}  }`;
+          return `${space}  ${key}: {\n${iter(children, depth + 1)}\n${space}  }`;
         case 'deleted':
-          return `${space}- ${getKey(item)}: ${convertToString(getValue1(item), depth)}`;
+          return `${space}- ${key}: ${convertToString(value1, depth)}`;
         case 'added':
-          return `${space}+ ${getKey(item)}: ${convertToString(getValue1(item), depth)}`;
+          return `${space}+ ${key}: ${convertToString(value1, depth)}`;
         case 'changed':
-          return `${space}- ${getKey(item)}: ${convertToString(getValue1(item), depth)}\n${space}+ ${getKey(item)}: ${convertToString(getValue2(item), depth)}`;
+          return `${space}- ${key}: ${convertToString(value1, depth)}\n${space}+ ${key}: ${convertToString(value2, depth)}`;
         case 'unchanged':
-          return `${space}  ${getKey(item)}: ${convertToString(getValue1(item), depth)}`;
+          return `${space}  ${key}: ${convertToString(value1, depth)}`;
         default:
-          throw new Error(`Unknown status ${status}`);
+          throw new Error(`Unknown type ${type}`);
       }
     });
     return lines.join('\n');
