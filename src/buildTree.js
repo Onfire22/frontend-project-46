@@ -17,7 +17,7 @@ const buildDiffTree = (file1, file2) => {
     if (_.isPlainObject(file1[key]) && _.isPlainObject(file2[key])) {
       return { key, children: buildDiffTree(file1[key], file2[key]), status: 'complex' };
     }
-    if (_.has(file1, key) && !_.has(file2, key)) {
+    if (!_.has(file2, key)) {
       return { key, value1: file1[key], status: 'deleted' };
     }
     if (!_.has(file1, key) && _.has(file2, key)) {

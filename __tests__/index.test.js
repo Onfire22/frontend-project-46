@@ -12,23 +12,21 @@ const fixtureJSON1 = getFixturePath('file1.json');
 const fixtureJSON2 = getFixturePath('file2.json');
 const fixtureYAML1 = getFixturePath('file1.yaml');
 const fixtureYAML2 = getFixturePath('file2.yaml');
+const stylishResult = getExpectedResult('stylishResult.txt');
+const plainResult = getExpectedResult('plainResult.txt');
+const jsonResult = getExpectedResult('jsonResult.txt');
 
-test('gendiff stylish test', () => {
-  const stylishResult = getExpectedResult('stylishResult.txt');
-  expect(genDiff(fixtureJSON1, fixtureJSON2)).toEqual(stylishResult);
-  expect(genDiff(fixtureYAML1, fixtureYAML2)).toEqual(stylishResult);
-});
-
-test('gendiff plain test', () => {
-  const plainResult = getExpectedResult('plainResult.txt');
-  expect(genDiff(fixtureJSON1, fixtureJSON2, 'plain')).toEqual(plainResult);
-  expect(genDiff(fixtureYAML1, fixtureYAML2, 'plain')).toEqual(plainResult);
-});
-
-test('gendiff json test', () => {
-  const jsonResult = getExpectedResult('jsonResult.txt');
-  expect(genDiff(fixtureJSON1, fixtureJSON2, 'json')).toEqual(jsonResult);
-  expect(genDiff(fixtureYAML1, fixtureYAML2, 'json')).toEqual(jsonResult);
+test.each([
+  [fixtureJSON1, fixtureJSON2, 'stylish', stylishResult],
+  [fixtureYAML1, fixtureYAML2, 'stylish', stylishResult],
+  [fixtureJSON1, fixtureJSON2, undefined, stylishResult],
+  [fixtureYAML1, fixtureYAML2, undefined, stylishResult],
+  [fixtureJSON1, fixtureJSON2, 'plain', plainResult],
+  [fixtureYAML1, fixtureYAML2, 'plain', plainResult],
+  [fixtureJSON1, fixtureJSON2, 'json', jsonResult],
+  [fixtureYAML1, fixtureYAML2, 'json', jsonResult],
+])('gendiff test', (file1, file2, style, result) => {
+  expect(genDiff(file1, file2, style)).toEqual(result);
 });
 
 test('gendiff unknown formatter error', () => {

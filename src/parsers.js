@@ -5,11 +5,11 @@ const parseData = (file) => {
   const extName = getExtName(file);
   const data = getData(file);
   switch (extName) {
-    case '.json':
+    case 'json':
       return JSON.parse(data);
-    case '.yaml':
+    case 'yaml':
       return yaml.load(data);
-    case '.yml':
+    case 'yml':
       return yaml.load(data);
     default:
       throw new Error(`Unknown file extantion: ${extName}. Extantions supported: .json, .yaml, .yml`);
