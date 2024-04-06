@@ -16,7 +16,6 @@ const plain = (tree) => {
           key, children, value1, value2, type,
         } = item;
         const path = `${route}${key}`;
-        console.log(path);
         switch (type) {
           case 'complex':
             return iter(children, `${path}.`);
