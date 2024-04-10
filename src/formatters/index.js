@@ -8,7 +8,7 @@ const getFormat = (format, data) => {
     case 'plain':
       return plain(data);
     case 'json':
-      return JSON.stringify(data, null, 2);
+      return JSON.stringify(data);
     default:
       throw new Error(`Unknown format ${format}. Supported formats: stylish, plain, json`);
   }

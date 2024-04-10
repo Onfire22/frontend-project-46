@@ -1,14 +1,10 @@
 import yaml from 'js-yaml';
-import { getData, getExtName } from './utils.js';
 
-const parseData = (filename) => {
-  const extName = getExtName(filename);
-  const data = getData(filename);
+const parseData = (extName, data) => {
   switch (extName) {
     case 'json':
       return JSON.parse(data);
     case 'yaml':
-      return yaml.load(data);
     case 'yml':
       return yaml.load(data);
     default:

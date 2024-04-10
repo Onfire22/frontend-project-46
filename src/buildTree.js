@@ -7,10 +7,10 @@ const buildDiffTree = (content1, content2) => {
       return { key, children: buildDiffTree(content1[key], content2[key]), type: 'complex' };
     }
     if (!_.has(content2, key)) {
-      return { key, value1: content1[key], type: 'deleted' };
+      return { key, value: content1[key], type: 'deleted' };
     }
     if (!_.has(content1, key) && _.has(content2, key)) {
-      return { key, value1: content2[key], type: 'added' };
+      return { key, value: content2[key], type: 'added' };
     }
     if (!_.isEqual(content1[key], content2[key])) {
       return {
@@ -20,7 +20,7 @@ const buildDiffTree = (content1, content2) => {
         type: 'changed',
       };
     }
-    return { key, value1: content1[key], type: 'unchanged' };
+    return { key, value: content1[key], type: 'unchanged' };
   });
   return tree;
 };

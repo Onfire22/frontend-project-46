@@ -13,7 +13,7 @@ const plain = (tree) => {
     const line = node.filter((item) => item.type !== 'unchanged')
       .map((item) => {
         const {
-          key, children, value1, value2, type,
+          key, children, value, value1, value2, type,
         } = item;
         const path = `${route}${key}`;
         switch (type) {
@@ -22,7 +22,7 @@ const plain = (tree) => {
           case 'deleted':
             return `Property '${path}' was removed`;
           case 'added':
-            return `Property '${path}' was added with value: ${convertToString(value1)}`;
+            return `Property '${path}' was added with value: ${convertToString(value)}`;
           case 'changed':
             return `Property '${path}' was updated. From ${convertToString(value1)} to ${convertToString(value2)}`;
           default:
