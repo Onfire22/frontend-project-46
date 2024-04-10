@@ -12,19 +12,17 @@ const plain = (tree) => {
   const iter = (node, route) => {
     const line = node.filter((item) => item.type !== 'unchanged')
       .map((item) => {
-        const {
-          key, children, value, value1, value2, type,
-        } = item;
+        const { key, type } = item;
         const path = `${route}${key}`;
         switch (type) {
           case 'complex':
-            return iter(children, `${path}.`);
+            return iter(item.children, `${path}.`);
           case 'deleted':
             return `Property '${path}' was removed`;
           case 'added':
-            return `Property '${path}' was added with value: ${convertToString(value)}`;
+            return `Property '${path}' was added with value: ${convertToString(item.value)}`;
           case 'changed':
-            return `Property '${path}' was updated. From ${convertToString(value1)} to ${convertToString(value2)}`;
+            return `Property '${path}' was updated. From ${convertToString(item.value1)} to ${convertToString(item.value2)}`;
           default:
             throw new Error(`Unknown type ${type}`);
         }
